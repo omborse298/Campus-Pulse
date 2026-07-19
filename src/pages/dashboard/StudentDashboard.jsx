@@ -60,10 +60,12 @@ function StudentDashboard() {
         <div className="d-flex justify-content-between align-items-center mb-4">
 
           <div>
-            <h2 className="fw-bold">My Stories</h2>
+            <h2 className="fw-bold display-6 mb-2">
+              Student Dashboard
+            </h2>
 
-            <p className="text-muted">
-              View and manage your submitted stories.
+            <p className="text-muted fs-5">
+              Manage your competition stories and track their approval status.
             </p>
           </div>
 
@@ -81,36 +83,32 @@ function StudentDashboard() {
         <div className="row mb-5">
 
           <div className="col-md-3 mb-3">
-            <div className="card shadow border-0 text-center">
-              <div className="card-body">
-                <h3>{stories.length}</h3>
-                <p className="mb-0">Total Stories</p>
-              </div>
+<div className="card border-0 shadow-sm rounded-4 text-center h-100">                 <div className="card-body">
+              <h2 className="fw-bold mb-1">{stories.length}</h2>
+              <p className="mb-0">Total Stories</p>
+            </div>
             </div>
           </div>
 
           <div className="col-md-3 mb-3">
-            <div className="card shadow border-0 bg-success text-white text-center">
-              <div className="card-body">
-                <h3>{approved}</h3>
+<div className="card border-0 shadow-sm rounded-4 bg-success text-white text-center h-100">              <div className="card-body py-4">         
+                 <h2 className="fw-bold mb-1">{approved}</h2>
                 <p className="mb-0">Approved</p>
               </div>
             </div>
           </div>
 
           <div className="col-md-3 mb-3">
-            <div className="card shadow border-0 bg-warning text-center">
-              <div className="card-body">
-                <h3>{pending}</h3>
+<div className="card border-0 shadow-sm rounded-4 bg-warning text-white text-center h-100">              <div className="card-body">
+                <h2 className="fw-bold mb-1">{pending}</h2>
                 <p className="mb-0">Pending</p>
               </div>
             </div>
           </div>
 
           <div className="col-md-3 mb-3">
-            <div className="card shadow border-0 bg-danger text-white text-center">
-              <div className="card-body">
-                <h3>{rejected}</h3>
+<div className="card border-0 shadow-sm rounded-4 bg-danger text-white text-center h-100">                <div className="card-body">
+                <h2 className="fw-bold mb-1">{rejected}</h2>
                 <p className="mb-0">Rejected</p>
               </div>
             </div>
@@ -159,13 +157,12 @@ function StudentDashboard() {
                       <strong>Status :</strong>{" "}
 
                       <span
-                        className={`badge ${
-                          story.status === "approved"
-                            ? "bg-success"
-                            : story.status === "rejected"
+                        className={`badge ${story.status === "approved"
+                          ? "bg-success"
+                          : story.status === "rejected"
                             ? "bg-danger"
                             : "bg-warning text-dark"
-                        }`}
+                          }`}
                       >
                         {story.status}
                       </span>

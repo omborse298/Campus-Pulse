@@ -53,13 +53,13 @@ function Register() {
                     <label className="fw-bold small text-secondary mb-1">Full Name</label>
                     <div className="input-group mb-3">
                       <span className="input-group-text bg-light border-end-0"><FaUser size={14} className="text-muted" /></span>
-                      <input type="text" className="form-control border-start-0 bg-light" name="name" value={form.name} onChange={handleChange} required />
+                      <input type="text" className="form-control border-start-0 bg-light" name="name" placeholder="Enter your full name" value={form.name} onChange={handleChange} required />
                     </div>
 
                     <div className="row">
                       <div className="col-md-6">
-                        <label className="fw-bold small text-secondary mb-1">PRN Number</label>
-                        <input type="text" className="form-control mb-3 bg-light" name="prn" value={form.prn} onChange={handleChange} required />
+                        <label className="fw-bold small text-secondary mb-1">CRN Number</label>
+                        <input type="text" className="form-control mb-3 bg-light" name="prn" placeholder="Enter CRN" value={form.prn} onChange={handleChange} required />
                       </div>
                       <div className="col-md-6">
                         <label className="fw-bold small text-secondary mb-1">Class</label>
@@ -73,13 +73,13 @@ function Register() {
                     <label className="fw-bold small text-secondary mb-1">Email Address</label>
                     <div className="input-group mb-3">
                       <span className="input-group-text bg-light border-end-0"><FaEnvelope size={14} className="text-muted" /></span>
-                      <input type="email" className="form-control border-start-0 bg-light" name="email" value={form.email} onChange={handleChange} required />
+                      <input type="email" className="form-control border-start-0 bg-light" name="email" placeholder="name@example.com" value={form.email} onChange={handleChange} required />
                     </div>
 
                     <label className="fw-bold small text-secondary mb-1">Password</label>
                     <div className="input-group mb-4">
                       <span className="input-group-text bg-light border-end-0"><FaLock size={14} className="text-muted" /></span>
-                      <input type={showPassword ? "text" : "password"} className="form-control border-0 bg-light" name="password" value={form.password} onChange={handleChange} required />
+                      <input type={showPassword ? "text" : "password"} className="form-control border-0 bg-light" name="password" placeholder="Enter your password" value={form.password} onChange={handleChange} required />
                       <button type="button" className="btn btn-light border-0" onClick={() => setShowPassword(!showPassword)}>
                         {showPassword ? <FaEyeSlash /> : <FaEye />}
                       </button>

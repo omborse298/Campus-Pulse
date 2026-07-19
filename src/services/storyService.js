@@ -15,23 +15,30 @@ import {
 
 import { db } from "../firebase/config";
 
-
-
-// ================= ADD STORY =================
+// ==========================================
+// ADD STORY
+// ==========================================
 
 export const addStory = async (storyData) => {
-  return await addDoc(collection(db, "stories"), {
-    ...storyData,
-    status: "pending",
-    likes: 0,
-    comments: [],
-    createdAt: serverTimestamp(),
-  });
+  try {
+    const docRef = await addDoc(collection(db, "stories"), {
+      ...storyData,
+      status: "pending",
+      likes: 0,
+      comments: [],
+      createdAt: serverTimestamp(),
+    });
+
+    return docRef;
+  } catch (error) {
+    console.error("Error adding story:", error);
+    throw error;
+  }
 };
 
-
-
-// ================= GET MY STORIES =================
+// ==========================================
+// GET STORIES OF LOGGED-IN USER
+// ==========================================
 
 export const getUserStories = async (userId) => {
   const q = query(
@@ -47,9 +54,9 @@ export const getUserStories = async (userId) => {
   }));
 };
 
-
-
-// ================= GET APPROVED STORIES =================
+// ==========================================
+// GET APPROVED STORIES
+// ==========================================
 
 export const getApprovedStories = async () => {
   const q = query(
@@ -65,9 +72,9 @@ export const getApprovedStories = async () => {
   }));
 };
 
-
-
-// ================= GET PENDING STORIES =================
+// ==========================================
+// GET PENDING STORIES
+// ==========================================
 
 export const getPendingStories = async () => {
   const q = query(
@@ -83,17 +90,44 @@ export const getPendingStories = async () => {
   }));
 };
 
+// ==========================================
+// GET STORY BY ID
+// ==========================================
 
+export const getStoryById = async (id) => {
+  const storyRef = doc(db, "stories", id);
 
-// ================= DELETE STORY =================
+  const storySnap = await getDoc(storyRef);
+
+  if (!storySnap.exists()) {
+    return null;
+  }
+
+  return {
+    id: storySnap.id,
+    ...storySnap.data(),
+  };
+};
+
+// ==========================================
+// UPDATE STORY
+// ==========================================
+
+export const updateStory = async (id, updatedData) => {
+  await updateDoc(doc(db, "stories", id), updatedData);
+};
+
+// ==========================================
+// DELETE STORY
+// ==========================================
 
 export const deleteStory = async (id) => {
   await deleteDoc(doc(db, "stories", id));
 };
 
-
-
-// ================= APPROVE STORY =================
+// ==========================================
+// APPROVE STORY
+// ==========================================
 
 export const approveStory = async (id) => {
   await updateDoc(doc(db, "stories", id), {
@@ -101,9 +135,9 @@ export const approveStory = async (id) => {
   });
 };
 
-
-
-// ================= REJECT STORY =================
+// ==========================================
+// REJECT STORY
+// ==========================================
 
 export const rejectStory = async (id) => {
   await updateDoc(doc(db, "stories", id), {
@@ -111,9 +145,9 @@ export const rejectStory = async (id) => {
   });
 };
 
-
-
-// ================= LIKE STORY =================
+// ==========================================
+// LIKE STORY
+// ==========================================
 
 export const likeStory = async (id) => {
   await updateDoc(doc(db, "stories", id), {
@@ -121,33 +155,19 @@ export const likeStory = async (id) => {
   });
 };
 
+// ==========================================
+// ADD COMMENT
+// ==========================================
 
-
-// ================= COMMENT =================
-
-export const addComment = async (
-  storyId,
-  comment
-) => {
+export const addComment = async (storyId, comment) => {
   await updateDoc(doc(db, "stories", storyId), {
     comments: arrayUnion(comment),
   });
 };
 
-export const getStoryById = async (id) => {
-  const docRef = doc(db, "stories", id);
-
-  const docSnap = await getDoc(docRef);
-
-  if (!docSnap.exists()) {
-    return null;
-  }
-
-  return {
-    id: docSnap.id,
-    ...docSnap.data(),
-  };
-};
+// ==========================================
+// DASHBOARD COUNTS
+// ==========================================
 
 export const getApprovedCount = async (userId) => {
   const q = query(
@@ -177,10 +197,4 @@ export const getRejectedCount = async (userId) => {
   );
 
   return (await getDocs(q)).size;
-};
-
-export const updateStory = async (id, updatedData) => {
-  const storyRef = doc(db, "stories", id);
-
-  await updateDoc(storyRef, updatedData);
 };

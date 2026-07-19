@@ -1,12 +1,15 @@
 import { Navigate } from "react-router-dom";
 
-function ProtectedRoute({ children, user, allowedRole }) {
+function ProtectedRoute({
+  children,
+  user,
+  allowedRole,
+}) {
   if (!user) {
     return <Navigate to="/login" replace />;
   }
-  
-  // If user exists but role is wrong, redirect to home
-  if (user.role !== allowedRole) {
+
+  if (allowedRole && user.role !== allowedRole) {
     return <Navigate to="/" replace />;
   }
 

@@ -54,11 +54,15 @@ function StoryDetails() {
     return (
       <>
         <Navbar />
-        <div className="container py-5">
-          <div className="alert alert-warning">
-            Story not found.
-          </div>
+
+        <div className="container py-5 text-center">
+          <h2 className="fw-bold">Story Not Found</h2>
+
+          <p className="text-muted">
+            The requested story does not exist or has been removed.
+          </p>
         </div>
+
         <Footer />
       </>
     );
@@ -70,73 +74,119 @@ function StoryDetails() {
 
       <div className="container py-5">
 
-        <div className="card shadow-lg border-0 rounded-4">
+        <div
+          className="card border-0 rounded-4 shadow-sm"
+          style={{ overflow: "hidden" }}
+        >
 
-          <div className="card-body p-5">
+          <div className="card-body p-4 p-lg-5">
 
-            <span className="badge bg-primary">
-              {story.category}
-            </span>
+            <div className="d-flex justify-content-between align-items-start flex-wrap">
 
-            <h2 className="fw-bold mt-3">
-              {story.competition}
-            </h2>
+              <div>
 
-            <p className="text-muted">
-              By {story.userName}
-            </p>
+                <span className="badge bg-primary px-3 py-2 rounded-pill">
+                  {story.category}
+                </span>
 
-            <hr />
+                <h2 className="fw-bold mt-3 mb-2">
+                  {story.competition}
+                </h2>
 
-            <h4>
+                <p className="text-muted mb-0">
+                  Shared by <strong>{story.userName}</strong>
+                </p>
+
+              </div>
+
+              <div className="mt-3 mt-lg-0">
+
+                <span className="badge bg-success fs-6 px-3 py-2 rounded-pill">
+                  Faculty Approved
+                </span>
+
+              </div>
+
+            </div>
+
+            <hr className="my-4" />
+
+            <h4 className="fw-bold mb-3">
               <FaBookOpen className="me-2 text-primary" />
               Experience
             </h4>
 
-            <p>{story.experience}</p>
+            <p
+              className="text-secondary"
+              style={{
+                lineHeight: "1.9",
+                textAlign: "justify",
+              }}
+            >
+              {story.experience}
+            </p>
 
-            <hr />
+            <hr className="my-4" />
 
-            <h4>
+            <h4 className="fw-bold mb-3">
               <FaLightbulb className="me-2 text-warning" />
               Key Learnings
             </h4>
 
-            <p>{story.learning}</p>
-
-            <hr />
-
-            <h4>
-              <FaUserGraduate className="me-2 text-success" />
-              Advice
-            </h4>
-
-            <p>{story.advice}</p>
-
-            <hr />
-
-            <button
-              className="btn btn-outline-danger me-3"
-              onClick={handleLike}
+            <p
+              className="text-secondary"
+              style={{
+                lineHeight: "1.9",
+                textAlign: "justify",
+              }}
             >
-              ❤️ {story.likes || 0}
-            </button>
+              {story.learning}
+            </p>
 
             <hr className="my-4" />
 
-            <h4>Comments</h4>
+            <h4 className="fw-bold mb-3">
+              <FaUserGraduate className="me-2 text-success" />
+              Advice for Learners
+            </h4>
+
+            <p
+              className="text-secondary"
+              style={{
+                lineHeight: "1.9",
+                textAlign: "justify",
+              }}
+            >
+              {story.advice}
+            </p>
+
+            <hr className="my-4" />
+
+            <button
+              className="btn btn-outline-danger rounded-pill px-4"
+              onClick={handleLike}
+            >
+              <FaHeart className="me-2" />
+              {story.likes || 0} Likes
+            </button>
+
+            <hr className="my-5" />
+
+            <h4 className="fw-bold mb-4">
+              Community Discussion
+            </h4>
 
             <div className="input-group mb-4">
 
               <input
-                className="form-control"
+                className="form-control rounded-start-pill py-3"
                 placeholder="Write a comment..."
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
               />
 
               <button
-                className="btn btn-primary"
+                className="btn btn-primary rounded-end-pill px-4"
                 onClick={handleComment}
               >
                 <FaPaperPlane />
@@ -144,23 +194,46 @@ function StoryDetails() {
 
             </div>
 
-            {(story.comments || []).map((item, index) => (
+            {(story.comments || []).length === 0 ? (
 
-              <div
-                key={index}
-                className="border rounded-3 p-3 mb-3"
-              >
-                <h6>{item.user}</h6>
+              <div className="text-center py-4">
 
-                <p>{item.text}</p>
-
-                <small className="text-muted">
-                  {item.time}
-                </small>
+                <p className="text-muted mb-0">
+                  No comments yet. Be the first to comment.
+                </p>
 
               </div>
 
-            ))}
+            ) : (
+
+              story.comments.map((item, index) => (
+
+                <div
+                  key={index}
+                  className="card border-0 shadow-sm rounded-4 mb-3"
+                >
+
+                  <div className="card-body">
+
+                    <h6 className="fw-bold mb-2">
+                      {item.user}
+                    </h6>
+
+                    <p className="mb-2">
+                      {item.text}
+                    </p>
+
+                    <small className="text-muted">
+                      {item.time}
+                    </small>
+
+                  </div>
+
+                </div>
+
+              ))
+
+            )}
 
           </div>
 

@@ -51,6 +51,22 @@ function Profile() {
     );
   }
 
+  const isFaculty = user?.role === "faculty";
+
+  const displayName = isFaculty
+    ? "IT Faculty"
+    : user?.name;
+
+  const displayEmail = isFaculty
+    ? "facultyitdepart@gmail.com"
+    : user?.email;
+
+  const displayDepartment = user?.department || "Information Technology";
+
+  const displayRole = isFaculty
+    ? "Faculty"
+    : "Student";
+
   return (
     <>
       <Navbar />
@@ -66,7 +82,9 @@ function Profile() {
               <div className="card-body text-center p-5">
 
                 <img
-                  src="https://ui-avatars.com/api/?name=CampusPulse&background=0D6EFD&color=fff&size=200"
+                  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+                    displayName
+                  )}&background=0D6EFD&color=fff&size=200`}
                   alt="Profile"
                   className="rounded-circle mb-4"
                   width="150"
@@ -74,36 +92,53 @@ function Profile() {
                 />
 
                 <h2 className="fw-bold">
-                  {user?.name}
+                  {displayName}
                 </h2>
 
-                <p className="text-muted">
-                  {user?.email}
-                </p>
-
+                {!isFaculty && (
+                  <p className="text-muted">
+                    {displayEmail}
+                  </p>
+                )}
                 <hr />
 
                 <div className="row text-start mt-4">
 
                   <div className="col-md-6 mb-3">
                     <strong>Name</strong>
-                    <p>{user?.name}</p>
+                    <p>{displayName}</p>
                   </div>
 
                   <div className="col-md-6 mb-3">
                     <strong>Email</strong>
-                    <p>{user?.email}</p>
+                    <p>{displayEmail}</p>
                   </div>
 
-                  <div className="col-md-6 mb-3">
-                    <strong>Department</strong>
-                    <p>{user?.department || "Not Available"}</p>
-                  </div>
-
+                  {isFaculty && (
+                    <div className="col-md-6 mb-3">
+                      <strong>Department</strong>
+                      <p>{displayDepartment}</p>
+                    </div>
+                  )}
+                  
                   <div className="col-md-6 mb-3">
                     <strong>Role</strong>
-                    <p>{user?.role}</p>
+                    <p>{displayRole}</p>
                   </div>
+
+                  {!isFaculty && (
+                    <>
+                      <div className="col-md-6 mb-3">
+                        <strong>Class</strong>
+                        <p>{user?.studentClass || "Not Available"}</p>
+                      </div>
+
+                      <div className="col-md-6 mb-3">
+                        <strong>PRN Number</strong>
+                        <p>{user?.prn || "Not Available"}</p>
+                      </div>
+                    </>
+                  )}
 
                 </div>
 

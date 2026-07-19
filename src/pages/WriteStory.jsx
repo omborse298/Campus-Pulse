@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { addStory } from "../services/storyService";
+import { toast } from "react-toastify";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function WriteStory() {
   const navigate = useNavigate();
@@ -29,7 +32,7 @@ function WriteStory() {
       const user = auth.currentUser;
 
       if (!user) {
-        alert("Please login first.");
+        toast.error("Please login first.");
         return;
       }
 
@@ -44,124 +47,163 @@ function WriteStory() {
       navigate("/student-dashboard");
     } catch (error) {
       console.error(error);
-toast.error("Failed to submit story");    }
+      toast.error("Failed to submit story");
+    }
   };
 
   return (
-    <div className="container py-5">
+    <>
+      <Navbar />
 
-      <div className="text-center mb-5">
-        <h1 className="fw-bold">Share Your Competition Story</h1>
-        <p className="text-secondary">
-          Inspire other students with your experience.
-        </p>
+      <div className="container py-5">
+
+        <div className="text-center mb-5">
+
+          <span className="badge bg-primary px-4 py-2 rounded-pill mb-3">
+            Student Experience
+          </span>
+
+          <h1 className="fw-bold display-5">
+            Share Your Competition Story
+          </h1>
+
+          <p className="text-muted fs-5">
+            Help juniors learn from your real experience and inspire future participants.
+          </p>
+
+        </div>
+
+        <div className="card border-0 shadow rounded-4">
+
+          <div className="card-body p-4 p-lg-5">
+
+            <form onSubmit={handleSubmit}>
+
+              <div className="row">
+
+                <div className="col-lg-6 mb-4">
+
+                  <label className="fw-semibold mb-2">
+                    Competition Name
+                  </label>
+
+                  <input
+                    type="text"
+                    className="form-control form-control-lg rounded-3"
+                    placeholder="Enter competition name"
+                    name="competition"
+                    value={formData.competition}
+                    onChange={handleChange}
+                    required
+                  />
+
+                </div>
+
+                <div className="col-lg-6 mb-4">
+
+                  <label className="fw-semibold mb-2">
+                    Category
+                  </label>
+
+                  <select
+                    className="form-select form-select-lg rounded-3"
+                    name="category"
+                    value={formData.category}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select Category</option>
+                    <option value="Hackathon">Hackathon</option>
+                    <option value="Technical Competition">
+                      Technical Competition
+                    </option>
+                    <option value="Project Competition">
+                      Project Competition
+                    </option>
+                    <option value="Paper Presentation">
+                      Paper Presentation
+                    </option>
+                  </select>
+
+                </div>
+
+              </div>
+
+              <div className="mb-4">
+
+                <label className="fw-semibold mb-2">
+                  Your Experience
+                </label>
+
+                <textarea
+                  className="form-control rounded-3"
+                  rows="6"
+                  placeholder="Describe your overall competition experience..."
+                  name="experience"
+                  value={formData.experience}
+                  onChange={handleChange}
+                  required
+                />
+
+              </div>
+
+              <div className="mb-4">
+
+                <label className="fw-semibold mb-2">
+                  Key Learnings
+                </label>
+
+                <textarea
+                  className="form-control rounded-3"
+                  rows="5"
+                  placeholder="What important lessons did you learn?"
+                  name="learning"
+                  value={formData.learning}
+                  onChange={handleChange}
+                  required
+                />
+
+              </div>
+
+              <div className="mb-4">
+
+                <label className="fw-semibold mb-2">
+                  Advice for Learners
+                </label>
+
+                <textarea
+                  className="form-control rounded-3"
+                  rows="4"
+                  placeholder="Share tips for future participants..."
+                  name="advice"
+                  value={formData.advice}
+                  onChange={handleChange}
+                  required
+                />
+
+              </div>
+
+              <div className="text-end">
+
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-lg rounded-pill px-5 shadow-sm"
+                >
+                  Submit Story
+                </button>
+
+              </div>
+
+            </form>
+
+          </div>
+
+        </div>
+
       </div>
 
-      <div className="card shadow border-0 rounded-4 p-5">
-
-        <form onSubmit={handleSubmit}>
-
-          <div className="row">
-
-            <div className="col-md-6 mb-3">
-              <label className="fw-semibold">
-                Competition Name
-              </label>
-
-              <input
-                className="form-control"
-                name="competition"
-                value={formData.competition}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="col-md-6 mb-3">
-              <label className="fw-semibold">
-                Category
-              </label>
-
-              <select
-                className="form-select"
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Category</option>
-                <option value="Hackathon">Hackathon</option>
-                <option value="Technical Competition">
-                  Technical Competition
-                </option>
-                <option value="Project Competition">
-                  Project Competition
-                </option>
-                <option value="Paper Presentation">
-                  Paper Presentation
-                </option>
-              </select>
-            </div>
-
-          </div>
-
-          <div className="mb-3">
-            <label className="fw-semibold">
-              Your Experience
-            </label>
-
-            <textarea
-              className="form-control"
-              rows="5"
-              name="experience"
-              value={formData.experience}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="mb-3">
-            <label className="fw-semibold">
-              Key Learnings
-            </label>
-
-            <textarea
-              className="form-control"
-              rows="4"
-              name="learning"
-              value={formData.learning}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="fw-semibold">
-              Advice for Learners
-            </label>
-
-            <textarea
-              className="form-control"
-              rows="3"
-              name="advice"
-              value={formData.advice}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="btn btn-primary rounded-pill px-5"
-          >
-            Submit Story
-          </button>
-
-        </form>
-
-      </div>
-
-    </div>
+      <Footer />
+    </>
   );
 }
 

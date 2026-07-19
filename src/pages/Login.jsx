@@ -65,7 +65,7 @@ function Login() {
                     <label className="form-label small fw-bold text-muted text-uppercase">Email Address</label>
                     <div className="input-group">
                       <span className="input-group-text border-end-0 bg-white"><FaEnvelope className="text-secondary" /></span>
-                      <input type="email" className="form-control border-start-0" name="email" value={form.email} onChange={handleChange} required />
+                      <input type="email" className="form-control border-start-0" name="email" placeholder="name@example.com" value={form.email} onChange={handleChange} required />
                     </div>
                   </div>
 
@@ -73,7 +73,7 @@ function Login() {
                     <label className="form-label small fw-bold text-muted text-uppercase">Password</label>
                     <div className="input-group">
                       <span className="input-group-text border-end-0 bg-white"><FaLock className="text-secondary" /></span>
-                      <input type={showPassword ? "text" : "password"} className="form-control border-start-0" name="password" value={form.password} onChange={handleChange} required />
+                      <input type={showPassword ? "text" : "password"} className="form-control border-start-0" name="password" placeholder="Enter your password" value={form.password} onChange={handleChange} required />
                       <button type="button" className="btn btn-outline-secondary border-start-0" onClick={() => setShowPassword(!showPassword)}>
                         {showPassword ? <FaEyeSlash /> : <FaEye />}
                       </button>

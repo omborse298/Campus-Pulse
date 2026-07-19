@@ -23,7 +23,7 @@ function ExploreStories() {
 
       setStories(data);
     } catch (error) {
-      console.error("Error loading stories:", error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -62,81 +62,152 @@ function ExploreStories() {
     <>
       <Navbar />
 
-      <div className="container py-5">
+      <div
+        style={{
+          background: "#f8f9fc",
+          minHeight: "100vh",
+        }}
+      >
+        <div className="container py-5">
 
-        <div className="text-center mb-5">
-          <h2 className="fw-bold">
-            Explore Success Stories
-          </h2>
+          {/* Header */}
 
-          <p className="text-muted">
-            Browse inspiring stories shared by students.
-          </p>
-        </div>
+          <div className="text-center mb-5">
 
-        <div className="row mb-5">
-
-          <div className="col-md-8 mb-3">
-
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Search by competition or student..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-
-          </div>
-
-          <div className="col-md-4 mb-3">
-
-            <select
-              className="form-select form-select-lg"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+            <h1
+              className="fw-bold"
+              style={{
+                color: "#2d3436",
+              }}
             >
-              <option value="All">All Categories</option>
-              <option value="Hackathon">Hackathon</option>
-              <option value="Technical Competition">
-                Technical Competition
-              </option>
-              <option value="Project Competition">
-                Project Competition
-              </option>
-              <option value="Paper Presentation">
-                Paper Presentation
-              </option>
-            </select>
+              Explore Stories
+            </h1>
+
+            <p
+              className="text-muted fs-5"
+              style={{
+                maxWidth: "700px",
+                margin: "0 auto",
+              }}
+            >
+              Browse faculty-approved experiences shared by students
+              who participated in hackathons, startup competitions,
+              project exhibitions and technical events.
+            </p>
 
           </div>
 
-        </div>
+          {/* Search */}
 
-        <div className="row">
+          <div className="card border-0 shadow-sm rounded-4 mb-5">
+
+            <div className="card-body p-4">
+
+              <div className="row g-3">
+
+                <div className="col-lg-8">
+
+                  <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    placeholder="🔍 Search by competition or student..."
+                    value={search}
+                    onChange={(e) =>
+                      setSearch(e.target.value)
+                    }
+                  />
+
+                </div>
+
+                <div className="col-lg-4">
+
+                  <select
+                    className="form-select form-select-lg"
+                    value={category}
+                    onChange={(e) =>
+                      setCategory(e.target.value)
+                    }
+                  >
+                    <option value="All">
+                      All Categories
+                    </option>
+
+                    <option value="Hackathon">
+                      Hackathon
+                    </option>
+
+                    <option value="Technical Competition">
+                      Technical Competition
+                    </option>
+
+                    <option value="Project Competition">
+                      Project Competition
+                    </option>
+
+                    <option value="Paper Presentation">
+                      Paper Presentation
+                    </option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* Result Count */}
+
+          <div className="d-flex justify-content-between align-items-center mb-4">
+
+            <h5 className="fw-bold mb-0">
+              Approved Stories
+            </h5>
+
+            <span className="badge bg-primary fs-6 px-3 py-2 rounded-pill">
+              {filteredStories.length} Stories
+            </span>
+
+          </div>
+
+          {/* Stories */}
 
           {filteredStories.length === 0 ? (
 
-            <div className="col-12">
+            <div className="card border-0 shadow-sm rounded-4">
 
-              <div className="alert alert-info text-center">
-                No stories found.
+              <div className="card-body text-center py-5">
+
+                <h4 className="fw-bold">
+                  No Stories Found
+                </h4>
+
+                <p className="text-muted mb-0">
+                  Try changing the search keyword or category.
+                </p>
+
               </div>
 
             </div>
 
           ) : (
 
-            filteredStories.map((story) => (
-              <StoryCard
-                key={story.id}
-                story={story}
-              />
-            ))
+            <div className="row">
+
+              {filteredStories.map((story) => (
+                <StoryCard
+                  key={story.id}
+                  story={story}
+                />
+              ))}
+
+            </div>
 
           )}
 
         </div>
-
       </div>
 
       <Footer />

@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Categories from "../components/Categories";
@@ -6,6 +8,7 @@ import HowItWorks from "../components/HowItWorks";
 import Stats from "../components/Stats";
 import Footer from "../components/Footer";
 import StoryCard from "../components/StoryCard";
+
 import { getApprovedStories } from "../services/storyService";
 
 function Home() {
@@ -16,63 +19,121 @@ function Home() {
   }, []);
 
   const loadStories = async () => {
-    const data = await getApprovedStories();
-    setStories(data);
+    try {
+      const data = await getApprovedStories();
+      setStories(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <div style={{ backgroundColor: "#f8f9fa" }}>
+    <>
       <Navbar />
-      <Hero />
 
-      {/* Stats Section - Moved up to provide immediate value */}
-      <div style={{ marginTop: "-50px", position: "relative", zIndex: 2 }}>
-        <div className="container">
+      <div style={{ background: "#f8f9fc" }}>
+        <Hero />
+
+        {/* Stats */}
+        <div
+          className="container"
+          style={{
+            marginTop: "-60px",
+            position: "relative",
+            zIndex: 10,
+          }}
+        >
           <Stats />
         </div>
-      </div>
 
-      <main className="container py-5">
-        
-        <Categories />
-        
-        <div className="my-5">
+        <main className="container py-5">
+
+          {/* Categories */}
+          <section className="mb-5">
+            <Categories />
+          </section>
+
+          {/* How it Works */}
+          <section className="mb-5">
             <HowItWorks />
-        </div>
+          </section>
 
-        {/* Latest Stories Section - Professional Grid */}
-        <section className="py-5">
-          <div className="d-flex justify-content-between align-items-center mb-5">
-            <div>
-              <h2 className="fw-bold mb-1" style={{ color: "#2d3436" }}>Latest Insights</h2>
-              <p className="text-muted">Faculty-verified experiences from our community.</p>
-            </div>
-            <a href="/stories" className="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
-              Explore All Stories
-            </a>
-          </div>
+          {/* Latest Stories */}
+          <section className="py-4">
 
-          <div className="row g-4">
-            {stories.length === 0 ? (
-              <div className="col-12 text-center py-5">
-                <p className="text-muted">No stories available at this time.</p>
+            <div className="row align-items-center mb-4">
+
+              <div className="col-lg-8">
+
+                <h2
+                  className="fw-bold mb-2"
+                  style={{
+                    color: "#2d3436",
+                  }}
+                >
+                  Latest Approved Stories
+                </h2>
+
+                <p className="text-muted mb-0">
+                  Discover faculty-approved competition experiences
+                  shared by students across various technical events.
+                </p>
+
               </div>
-            ) : (
-              stories.map((story) => (
-                <div className="col-md-4" key={story.id}>
-                    <div className="h-100 shadow-sm border-0 rounded-4 overflow-hidden transition-all">
-                        <StoryCard story={story} />
-                    </div>
-                </div>
-              ))
-            )}
-          </div>
-        </section>
-        
-      </main>
 
-      <Footer />
-    </div>
+              <div className="col-lg-4 text-lg-end mt-3 mt-lg-0">
+
+                <Link
+                  to="/stories"
+                  className="btn btn-primary rounded-pill px-4 py-2 shadow-sm"
+                >
+                  Explore All Stories →
+                </Link>
+
+              </div>
+
+            </div>
+
+            {stories.length === 0 ? (
+
+              <div className="card border-0 shadow-sm rounded-4">
+
+                <div className="card-body py-5 text-center">
+
+                  <h5 className="fw-semibold">
+                    No Stories Available
+                  </h5>
+
+                  <p className="text-muted mb-0">
+                    Faculty-approved stories will appear here.
+                  </p>
+
+                </div>
+
+              </div>
+
+            ) : (
+
+              <div className="row">
+
+                {stories.map((story) => (
+                  <StoryCard
+                    key={story.id}
+                    story={story}
+                  />
+                ))}
+
+              </div>
+
+            )}
+
+          </section>
+
+        </main>
+
+        <Footer />
+      </div>
+    </>
   );
 }
 

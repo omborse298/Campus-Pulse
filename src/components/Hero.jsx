@@ -5,28 +5,34 @@ function Hero() {
     <section
       className="py-5"
       style={{
-        background: "linear-gradient(135deg, #0d6efd 0%, #6f42c1 100%)",
-        minHeight: "90vh",
+        background:
+          "linear-gradient(135deg, #0d6efd 0%, #6f42c1 100%)",
+        minHeight: "82vh",
         display: "flex",
         alignItems: "center",
       }}
     >
       <div className="container">
 
-        <div className="row align-items-center">
+        <div className="row align-items-center g-5">
 
-          {/* Left Side */}
+          {/* Left Section */}
 
           <div className="col-lg-6 text-white">
 
-            <span className="badge bg-light text-primary px-3 py-2 rounded-pill mb-4">
-              🚀 India's Student Success Platform
+            <span
+              className="badge bg-white text-primary px-4 py-2 rounded-pill mb-4 shadow-sm"
+              style={{
+                fontSize: "0.95rem",
+              }}
+            >
+              🚀 India's Student Competition Experience Platform
             </span>
 
             <h1
               className="fw-bold mb-4"
               style={{
-                fontSize: "4rem",
+                fontSize: "clamp(2.8rem,6vw,4.3rem)",
                 lineHeight: "1.15",
               }}
             >
@@ -38,95 +44,145 @@ function Hero() {
             </h1>
 
             <p
-              className="lead"
+              className="lead text-white-50"
               style={{
-                maxWidth: "600px",
+                maxWidth: "560px",
+                lineHeight: "1.8",
               }}
             >
-              CampusPulse is a platform where students share real competition
-              experiences, helping juniors prepare better for hackathons,
-              technical events, paper presentations and project competitions.
+              CampusPulse connects students through authentic competition
+              experiences, enabling juniors to prepare confidently for
+              hackathons, project competitions, technical events, paper
+              presentations and startup challenges.
             </p>
 
-            <div className="d-flex flex-wrap gap-3 mt-4">
+            <div className="d-flex flex-wrap gap-3 mt-5">
 
               <Link
                 to="/stories"
-                className="btn btn-light btn-lg rounded-pill px-4"
+                className="btn btn-light btn-lg rounded-pill px-4 fw-semibold shadow"
               >
                 📖 Explore Stories
               </Link>
 
               <Link
                 to="/write"
-                className="btn btn-outline-light btn-lg rounded-pill px-4"
+                className="btn btn-outline-light btn-lg rounded-pill px-4 fw-semibold"
               >
-                ✍ Share Story
+                ✍ Share Experience
               </Link>
 
             </div>
 
           </div>
 
-          {/* Right Side */}
+          {/* Right Section */}
 
-          <div className="col-lg-6 mt-5 mt-lg-0">
+          <div className="col-lg-6">
 
-            <div className="card border-0 shadow-lg rounded-4">
+            <div
+              className="card border-0 rounded-4 shadow-lg"
+              style={{
+                backdropFilter: "blur(10px)",
+              }}
+            >
 
               <div className="card-body p-5">
 
-                <h2 className="fw-bold text-primary mb-4">
+                <h2
+                  className="fw-bold text-primary mb-4"
+                >
                   Why CampusPulse?
                 </h2>
 
-                <div className="mb-4">
+                <div className="d-flex mb-4">
 
-                  <h5>📖 Real Student Experiences</h5>
+                  <div className="me-3 fs-3">
+                    📖
+                  </div>
 
-                  <p className="text-muted mb-0">
-                    Learn directly from students who participated in real
-                    competitions.
-                  </p>
+                  <div>
 
-                </div>
+                    <h5 className="fw-semibold">
+                      Real Student Experiences
+                    </h5>
 
-                <hr />
+                    <p className="text-muted mb-0">
+                      Learn from authentic experiences shared by students who
+                      have participated in national and state-level
+                      competitions.
+                    </p>
 
-                <div className="mb-4">
-
-                  <h5>🏆 Faculty Approved Stories</h5>
-
-                  <p className="text-muted mb-0">
-                    Every published story is reviewed by faculty for quality
-                    and authenticity.
-                  </p>
+                  </div>
 
                 </div>
 
                 <hr />
 
-                <div className="mb-4">
+                <div className="d-flex my-4">
 
-                  <h5>💡 Learn from Seniors</h5>
+                  <div className="me-3 fs-3">
+                    🏆
+                  </div>
 
-                  <p className="text-muted mb-0">
-                    Discover tips, mistakes to avoid and winning strategies
-                    from experienced participants.
-                  </p>
+                  <div>
+
+                    <h5 className="fw-semibold">
+                      Faculty Verified Stories
+                    </h5>
+
+                    <p className="text-muted mb-0">
+                      Every published story is reviewed and approved by
+                      faculty members to ensure quality and credibility.
+                    </p>
+
+                  </div>
 
                 </div>
 
                 <hr />
 
-                <div>
+                <div className="d-flex my-4">
 
-                  <h5>🚀 Prepare with Confidence</h5>
+                  <div className="me-3 fs-3">
+                    💡
+                  </div>
 
-                  <p className="text-muted mb-0">
-                    Build confidence before your next hackathon, project
-                    competition or technical event.
-                  </p>
+                  <div>
+
+                    <h5 className="fw-semibold">
+                      Practical Learning
+                    </h5>
+
+                    <p className="text-muted mb-0">
+                      Understand preparation strategies, common mistakes,
+                      interview rounds and winning approaches from seniors.
+                    </p>
+
+                  </div>
+
+                </div>
+
+                <hr />
+
+                <div className="d-flex">
+
+                  <div className="me-3 fs-3">
+                    🚀
+                  </div>
+
+                  <div>
+
+                    <h5 className="fw-semibold">
+                      Build Confidence
+                    </h5>
+
+                    <p className="text-muted mb-0">
+                      Prepare with confidence before participating in your
+                      next competition and maximize your chances of success.
+                    </p>
+
+                  </div>
 
                 </div>
 

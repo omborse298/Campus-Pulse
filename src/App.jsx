@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "./firebase/config"; 
+import { auth, db } from "./firebase/config";
 
 // Importing Components and Pages
 import Home from "./pages/Home";
@@ -21,8 +21,8 @@ import EditStory from "./pages/EditStory";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -33,8 +33,14 @@ function App() {
       if (user) {
         try {
           const userDoc = await getDoc(doc(db, "users", user.uid));
+
           if (userDoc.exists()) {
-            setCurrentUser({ uid: user.uid, ...userDoc.data() });
+            setCurrentUser({
+              uid: user.uid,
+              ...userDoc.data(),
+            });
+          } else {
+            setCurrentUser(null);
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
@@ -43,17 +49,20 @@ function App() {
       } else {
         setCurrentUser(null);
       }
+
       setLoading(false);
     });
+
     return unsubscribe;
   }, []);
 
-  if (loading) return null; 
+  if (loading) return null;
 
   return (
     <BrowserRouter>
       <Routes>
         {/* Public Routes */}
+
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -62,34 +71,91 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/story/:id" element={<StoryDetails />} />
 
-        {/* Protected Routes (Authenticated Users Only) */}
-        <Route path="/write" element={<ProtectedRoute user={currentUser} allowedRole="student"><WriteStory /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute user={currentUser} allowedRole="student"><Profile /></ProtectedRoute>} />
-        <Route path="/my-stories" element={<ProtectedRoute user={currentUser} allowedRole="student"><MyStories /></ProtectedRoute>} />
-        <Route path="/edit-story/:id" element={<ProtectedRoute user={currentUser} allowedRole="student"><EditStory /></ProtectedRoute>} />
+        {/* Student Routes */}
+
+        <Route
+          path="/write"
+          element={
+            <ProtectedRoute
+              user={currentUser}
+              allowedRole="student"
+            >
+              <WriteStory />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/my-stories"
+          element={
+            <ProtectedRoute
+              user={currentUser}
+              allowedRole="student"
+            >
+              <MyStories />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/edit-story/:id"
+          element={
+            <ProtectedRoute
+              user={currentUser}
+              allowedRole="student"
+            >
+              <EditStory />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Profile - Accessible to any logged in user */}
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute user={currentUser}>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Dashboards */}
+
         <Route
           path="/student-dashboard"
           element={
-            <ProtectedRoute user={currentUser} allowedRole="student">
+            <ProtectedRoute
+              user={currentUser}
+              allowedRole="student"
+            >
               <StudentDashboard />
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/faculty-dashboard"
           element={
-            <ProtectedRoute user={currentUser} allowedRole="faculty">
+            <ProtectedRoute
+              user={currentUser}
+              allowedRole="faculty"
+            >
               <FacultyDashboard />
             </ProtectedRoute>
           }
         />
 
+        {/* 404 */}
+
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      <ToastContainer position="top-right" autoClose={2500} theme="colored" />
+      <ToastContainer
+        position="top-right"
+        autoClose={2500}
+        theme="colored"
+      />
     </BrowserRouter>
   );
 }

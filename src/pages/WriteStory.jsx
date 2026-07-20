@@ -5,6 +5,8 @@ import { addStory } from "../services/storyService";
 import { toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase/config";
 
 function WriteStory() {
   const navigate = useNavigate();
@@ -17,7 +19,7 @@ function WriteStory() {
     learning: "",
     advice: "",
   });
-
+ 
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -36,10 +38,12 @@ function WriteStory() {
         return;
       }
 
+       const userDoc = await getDoc(doc(db, "users", user.uid));
+  const userData = userDoc.data();
       await addStory({
         ...formData,
         userId: user.uid,
-        userName: user.displayName || user.email,
+        userName: userData.name, // Student's actual name
       });
 
       toast.success("Story submitted successfully ✅");

@@ -12,10 +12,6 @@ import "./index.css";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <App />
-      <ToastContainer
-    position="top-right"
-    autoClose={2500}
-    theme="colored"
-  />
+      
   </React.StrictMode>
 );

@@ -62,6 +62,7 @@ function Home() {
           <section className="py-4">
 
             <div className="row align-items-center mb-4">
+              
 
               <div className="col-lg-8">
 
@@ -123,9 +124,12 @@ function Home() {
                   />
                 ))}
 
+
               </div>
 
             )}
+
+            
 
           </section>
 

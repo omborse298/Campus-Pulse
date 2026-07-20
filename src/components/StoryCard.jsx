@@ -1,6 +1,14 @@
-import { FaHeart, FaComment, FaArrowRight, FaTrophy } from "react-icons/fa";
+import {
+  FaHeart,
+  FaComment,
+  FaArrowRight,
+  FaTrophy,
+  FaUserCircle,
+  FaCalendarAlt,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { likeStory } from "../services/storyService";
+import "./StoryCard.css";
 
 function StoryCard({ story }) {
   const handleLike = async () => {
@@ -9,64 +17,83 @@ function StoryCard({ story }) {
   };
 
   return (
-    <div
-      className="card border-0 shadow-lg rounded-4 h-100 overflow-hidden"
-      style={{
-        transition: "0.3s",
-        minHeight: "390px"
-      }}
-    >
-      <div className="bg-primary text-white p-3">
-        <div className="d-flex justify-content-between align-items-center">
+    <div className="col-xl-6 col-lg-6 col-md-12 mb-4">
+      <div className="story-card">
 
-          <span className="badge bg-light text-primary">
-            {story.category}
-          </span>
+        <div className="story-header"></div>
 
-          <span className="badge bg-warning text-dark">
-            <FaTrophy className="me-1" />
-            {story.result || "Participant"}
-          </span>
+        <div className="story-content">
+
+          <div className="d-flex justify-content-between align-items-center mb-3">
+
+            <span className="badge rounded-pill bg-primary px-3 py-2">
+              {story.category}
+            </span>
+
+            <span className="badge rounded-pill bg-warning text-dark px-3 py-2">
+              <FaTrophy className="me-1" />
+              {story.result || "Participant"}
+            </span>
+
+          </div>
+
+          <h4 className="story-title">
+            {story.competition}
+          </h4>
+
+          <div className="story-author">
+
+            <FaUserCircle className="me-2 text-primary" />
+
+            
+              <span className="fw-semibold">
+                {story.userName || "Anonymous Student"}
+                
+                     
+            </span>
+
+          </div>
+
+          <div className="story-date">
+
+            <FaCalendarAlt className="me-2" />
+
+            <small>
+              {story.createdAt
+                ? new Date(
+                  story.createdAt.seconds * 1000
+                ).toLocaleDateString()
+                : "Recently"}
+            </small>
+
+          </div>
+
+          <p className="story-description">
+
+            {story.experience
+              ? story.experience.length > 170
+                ? story.experience.substring(0, 120) + "..."
+                : story.experience
+              : "No experience available."}
+
+          </p>
 
         </div>
 
-        <h5 className="fw-bold mt-3 mb-2">
-          {story.competition}
-        </h5>
-
-        <small>
-          {story.userName || story.name} • {story.studentClass || story.year}
-        </small>
-      </div>
-
-      <div
-        className="card-body d-flex flex-column"
-        style={{ minHeight: "170px" }}
-      >
-        <p className="text-muted flex-grow-1">
-          {story.experience
-            ? story.experience.length > 140
-              ? story.experience.substring(0, 140) + "..."
-              : story.experience
-            : "No experience available."}
-        </p>
-      </div>
-
-      <div className="card-footer bg-white border-0">
-        <div className="d-flex justify-content-between align-items-center">
+        <div className="story-footer">
 
           <div>
 
             <button
-              className="btn btn-sm btn-outline-danger me-2"
+              className="btn btn-light me-2"
               onClick={handleLike}
             >
-              <FaHeart className="me-1" />
+              <FaHeart className="text-danger me-1" />
               {story.likes || 0}
             </button>
 
-            <button className="btn btn-sm btn-outline-primary">
-              <FaComment className="me-1" />
+            <button className="btn btn-light">
+              <FaComment className="text-primary me-1" />
               {(story.comments || []).length}
             </button>
 
@@ -74,13 +101,14 @@ function StoryCard({ story }) {
 
           <Link
             to={`/story/${story.id}`}
-            className="btn btn-primary rounded-pill"
+            className="btn btn-primary rounded-pill px-4"
           >
-            Read
+            Read Story
             <FaArrowRight className="ms-2" />
           </Link>
 
         </div>
+
       </div>
     </div>
   );

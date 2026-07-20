@@ -25,12 +25,14 @@ function HowItWorks() {
   ];
 
   return (
-    <section className="container py-5">
-      <div className="text-center mb-5">
+<section className="py-5">
+  <div className="container">  
+        <div className="text-center mb-5">
         <h2 className="fw-bold">How CampusPulse Works</h2>
         <p className="text-muted">
           A simple cycle of learning, participating, and inspiring others.
         </p>
+      </div>
       </div>
 
       <div className="row">

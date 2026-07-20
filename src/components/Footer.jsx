@@ -6,8 +6,7 @@ import {
 
 function Footer() {
   return (
-    <footer className="bg-dark text-white mt-5">
-
+    <footer className="bg-dark text-white">
       <div className="container py-5">
 
         <div className="row">
@@ -67,17 +66,17 @@ function Footer() {
             <div className="mt-3">
 
               <p>
-                <FaEnvelope className="me-2"/>
+                <FaEnvelope className="me-2" />
                 campuspulse@gmail.com
               </p>
 
               <p>
-                <FaLinkedin className="me-2"/>
+                <FaLinkedin className="me-2" />
                 LinkedIn
               </p>
 
               <p>
-                <FaGithub className="me-2"/>
+                <FaGithub className="me-2" />
                 GitHub
               </p>
 
